@@ -8,4 +8,6 @@ import app.ecom.sb.entities.Category;
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Integer>{
 
+	boolean existsByName(String categoryName);
+
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import app.ecom.sb.dto.CategoryRequestDTO;
 import app.ecom.sb.entities.Category;
+import app.ecom.sb.exceptions.CategoryAlreadyExistException;
 import app.ecom.sb.exceptions.ResourceNotFoundException;
 import app.ecom.sb.mappers.CategoryMapper;
 import app.ecom.sb.repositories.CategoryRepository;
@@ -26,7 +27,7 @@ public class CategoryServiceImpl implements CategoryService {
 	public CategoryRequestDTO fetchOneCategory(int id) {
 
 		Optional<Category> optionalCategory = categoryRepository.findById(id);
-
+		
 		if (optionalCategory.isPresent()) {
 			return CategoryMapper.toCategoryRequestDTO(optionalCategory.get());
 		} else {
@@ -56,7 +57,18 @@ public class CategoryServiceImpl implements CategoryService {
 
 	@Override
 	public CategoryRequestDTO addOneCategory(CategoryRequestDTO categoryToAdd) {
-		return null;
+		
+		String categoryName = categoryToAdd.getName();
+		
+		boolean isCategoryExist = categoryRepository.existsByName(categoryName);
+		
+		if(isCategoryExist) {
+			throw new CategoryAlreadyExistException("Category with the name "+categoryName+" is already exist.");
+		}
+		
+		Category addedCategory = categoryRepository.save(CategoryMapper.toCategory(categoryToAdd));
+		
+		return CategoryMapper.toCategoryRequestDTO(addedCategory);
 	}
 
 	@Override

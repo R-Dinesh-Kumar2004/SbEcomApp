@@ -1,9 +1,13 @@
 package app.ecom.sb.dto;
 
+import java.util.List;
+
 public class CategoryRequestDTO {
 
 	private String name;
 	private String description;
+
+	private List<ProductRequestDTO> productList;
 
 	public CategoryRequestDTO() {
 		super();
@@ -29,6 +33,14 @@ public class CategoryRequestDTO {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public List<ProductRequestDTO> getProductList() {
+		return productList;
+	}
+
+	public void setProductList(List<ProductRequestDTO> productList) {
+		this.productList = productList;
 	}
 
 	@Override

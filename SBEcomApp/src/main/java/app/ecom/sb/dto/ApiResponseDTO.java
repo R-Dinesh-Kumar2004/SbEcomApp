@@ -13,6 +13,14 @@ public class ApiResponseDTO<T> {
 		super();
 	}
 
+	public ApiResponseDTO(int status, String message, T dataT) {
+		super();
+		this.status = status;
+		this.message = message;
+		this.timestamp = LocalDateTime.now();
+		this.dataT = dataT;
+	}
+
 	public ApiResponseDTO(int status, String message, LocalDateTime timestamp, T dataT) {
 		super();
 		this.status = status;
